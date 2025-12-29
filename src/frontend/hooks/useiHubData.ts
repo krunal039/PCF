@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ComponentFramework } from 'powerapps-component-framework';
+/// <reference types="powerapps-component-framework" />
 import { ServiceFactory } from '../../services/ServiceFactory';
 import { iHubResponse, iHubQueryOptions } from '../../models/iHubModels';
 import { ErrorHandler } from '../../core';

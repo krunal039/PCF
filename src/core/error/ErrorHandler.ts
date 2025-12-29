@@ -212,6 +212,7 @@ export class ErrorHandler {
    */
   private static isBusinessError(error: any): boolean {
     const statusCode = this.extractStatusCode(error);
+    if (statusCode === undefined) return false;
     return (
       statusCode >= 400 &&
       statusCode < 500 &&
@@ -226,6 +227,7 @@ export class ErrorHandler {
    */
   private static isSystemError(error: any): boolean {
     const statusCode = this.extractStatusCode(error);
+    if (statusCode === undefined) return false;
     return statusCode >= 500 && statusCode < 600;
   }
 

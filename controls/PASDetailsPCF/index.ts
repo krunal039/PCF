@@ -1,52 +1,56 @@
-import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import { ComponentFramework } from "powerapps-component-framework";
+/// <reference types="powerapps-component-framework" />
+import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import React from "react";
-import ReactDOM from "react-dom";
-import { App } from "../../src/frontend/App";
+import { createRoot, Root } from "react-dom/client";
+import { App, AppProps } from "../../src/frontend/App";
 
-export class PASDetailsPCF implements ComponentFramework.StandardControl<IInputs, IOutputs> {
-    private _container: HTMLDivElement;
-    private _context: ComponentFramework.Context<IInputs>;
-    private _notifyOutputChanged: () => void;
-    private _props: any;
+export class PASDetailsPCF
+  implements ComponentFramework.StandardControl<IInputs, IOutputs>
+{
+  private _container: HTMLDivElement;
+  private _context: ComponentFramework.Context<IInputs>;
+  private _notifyOutputChanged: () => void;
+  private _props: AppProps;
+  private _root: Root | null = null;
 
-    constructor() {}
+  constructor() {}
 
-    public init(
-        context: ComponentFramework.Context<IInputs>,
-        notifyOutputChanged: () => void,
-        state: ComponentFramework.Dictionary,
-        container: HTMLDivElement
-    ): void {
-        this._container = container;
-        this._context = context;
-        this._notifyOutputChanged = notifyOutputChanged;
+  public init(
+    context: ComponentFramework.Context<IInputs>,
+    notifyOutputChanged: () => void,
+    state: ComponentFramework.Dictionary,
+    container: HTMLDivElement
+  ): void {
+    this._container = container;
+    this._context = context;
+    this._notifyOutputChanged = notifyOutputChanged;
+  }
+
+  public updateView(context: ComponentFramework.Context<IInputs>): void {
+    this._context = context;
+
+    // Prepare props for React component
+    this._props = {
+      context: context,
+      sampleProperty: context.parameters.sampleProperty.raw || undefined,
+      onUpdate: this._notifyOutputChanged.bind(this),
+    };
+
+    // Render React component using React 18 createRoot
+    if (!this._root) {
+      this._root = createRoot(this._container);
     }
+    this._root.render(React.createElement(App, this._props));
+  }
 
-    public updateView(context: ComponentFramework.Context<IInputs>): void {
-        this._context = context;
-        
-        // Prepare props for React component
-        this._props = {
-            context: context,
-            sampleProperty: context.parameters.sampleProperty.raw,
-            onUpdate: this._notifyOutputChanged.bind(this)
-        };
+  public getOutputs(): IOutputs {
+    return {};
+  }
 
-        // Render React component
-        ReactDOM.render(
-            React.createElement(App, this._props),
-            this._container
-        );
+  public destroy(): void {
+    if (this._root) {
+      this._root.unmount();
+      this._root = null;
     }
-
-    public getOutputs(): IOutputs {
-        return {};
-    }
-
-    public destroy(): void {
-        ReactDOM.unmountComponentAtNode(this._container);
-    }
+  }
 }
-
-

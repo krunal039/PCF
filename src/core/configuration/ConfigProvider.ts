@@ -21,7 +21,13 @@ export class EnvironmentConfigProvider implements IConfigProvider {
 
   get<T>(key: string, defaultValue?: T): T | undefined {
     const envKey = `${this.prefix}${key.toUpperCase().replace(/\./g, "_")}`;
-    const value = process.env[envKey];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const processEnv =
+      typeof (globalThis as any).process !== "undefined" &&
+      (globalThis as any).process?.env
+        ? (globalThis as any).process.env
+        : undefined;
+    const value = processEnv ? processEnv[envKey] : undefined;
 
     if (value === undefined) {
       return defaultValue;
@@ -42,20 +48,37 @@ export class EnvironmentConfigProvider implements IConfigProvider {
 
   has(key: string): boolean {
     const envKey = `${this.prefix}${key.toUpperCase().replace(/\./g, "_")}`;
-    return process.env[envKey] !== undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const processEnv =
+      typeof (globalThis as any).process !== "undefined" &&
+      (globalThis as any).process?.env
+        ? (globalThis as any).process.env
+        : undefined;
+    return processEnv ? processEnv[envKey] !== undefined : false;
   }
 
   getAll(): Record<string, any> {
     const config: Record<string, any> = {};
     const prefix = this.prefix;
 
-    Object.keys(process.env).forEach((key) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const processEnv =
+      typeof (globalThis as any).process !== "undefined" &&
+      (globalThis as any).process?.env
+        ? (globalThis as any).process.env
+        : undefined;
+
+    if (!processEnv) {
+      return config;
+    }
+
+    Object.keys(processEnv).forEach((key) => {
       if (key.startsWith(prefix)) {
         const configKey = key
           .substring(prefix.length)
           .toLowerCase()
           .replace(/_/g, ".");
-        config[configKey] = process.env[key];
+        config[configKey] = processEnv[key];
       }
     });
 
