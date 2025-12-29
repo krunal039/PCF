@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="PASDetailsPCF" constructor="PASDetailsPCF" version="1.0.0" display-name-key="PASDetailsPCF_Display_Key" description-key="PASDetailsPCF_Desc_Key" control-type="standard">
+    
+    <!-- Property definitions -->
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    
+    <!-- Resources -->
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/PASDetailsPCF.css" order="1"/>
+      <resx path="strings/PASDetailsPCF.1033.resx" version="1.0.0" />
+    </resources>
+    
+    <!-- Feature usage -->
+    <feature-usage>
+      <uses-feature name="WebAPI" required="true" />
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+  </control>
+</manifest>
+
+
