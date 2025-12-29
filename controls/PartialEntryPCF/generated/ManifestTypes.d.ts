@@ -9,8 +9,6 @@ export interface IInputs {
     inceptionDate: ComponentFramework.PropertyTypes.DateTimeProperty;
     methodOfPlacement: ComponentFramework.PropertyTypes.OptionSetProperty;
     brokerCode: ComponentFramework.PropertyTypes.StringProperty;
-    accountLookup: ComponentFramework.PropertyTypes.LookupProperty;
-    sampleProperty: ComponentFramework.PropertyTypes.StringProperty;
 }
 export interface IOutputs {
     underwritingType?: number;
@@ -18,6 +16,4 @@ export interface IOutputs {
     inceptionDate?: Date;
     methodOfPlacement?: number;
     brokerCode?: string;
-    accountLookup?: ComponentFramework.LookupValue[];
-    sampleProperty?: string;
 }

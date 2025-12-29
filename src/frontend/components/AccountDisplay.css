@@ -1,0 +1,165 @@
+.account-display {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.account-loading,
+.account-error,
+.account-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+}
+
+.account-error {
+  color: #d32f2f;
+}
+
+.account-error .error-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.account-error .error-message {
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.account-empty .hint {
+  font-size: 13px;
+  color: #999;
+  margin-top: 8px;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.account-name {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #323130;
+}
+
+.refresh-button,
+.retry-button {
+  padding: 6px 12px;
+  background: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.refresh-button:hover,
+.retry-button:hover {
+  background: #106ebe;
+}
+
+.refresh-button:active,
+.retry-button:active {
+  background: #005a9e;
+}
+
+.account-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.account-section {
+  margin-bottom: 24px;
+  background: #fafafa;
+  border-radius: 4px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.section-title {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #323130;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  min-height: 24px;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #605e5c;
+  min-width: 140px;
+  font-size: 14px;
+  margin-right: 12px;
+}
+
+.detail-value {
+  flex: 1;
+  color: #323130;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.email-link,
+.website-link {
+  color: #0078d4;
+  text-decoration: none;
+}
+
+.email-link:hover,
+.website-link:hover {
+  text-decoration: underline;
+}
+
+.account-description {
+  padding: 12px;
+  background: white;
+  border-radius: 4px;
+  color: #323130;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.account-footer {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.account-id {
+  font-size: 12px;
+  color: #999;
+  font-family: "Courier New", monospace;
+}
+

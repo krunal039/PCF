@@ -32,7 +32,8 @@ export class PASDetailsPCF
     // Prepare props for React component
     this._props = {
       context: context,
-      sampleProperty: context.parameters.sampleProperty.raw || undefined,
+      accountLookup: context.parameters.accountLookup?.raw || undefined,
+      sampleProperty: context.parameters.sampleProperty?.raw || undefined,
       onUpdate: this._notifyOutputChanged.bind(this),
     };
 

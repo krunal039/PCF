@@ -1,39 +1,48 @@
 import React from "react";
 /// <reference types="powerapps-component-framework" />
-import { useDataverseData } from "../hooks/useDataverseData";
+import { useAccountData } from "../hooks/useAccountData";
+import { AccountDisplay } from "./AccountDisplay";
 import "./MainContainer.css";
 
 export interface MainContainerProps {
   context: ComponentFramework.Context<any>;
+  accountLookup?: ComponentFramework.LookupValue[];
   sampleProperty?: string;
   onUpdate?: () => void;
 }
 
 export const MainContainer: React.FC<MainContainerProps> = ({
   context,
+  accountLookup,
   sampleProperty,
-  onUpdate: _onUpdate,
 }) => {
-  const { data, loading, error, refresh } = useDataverseData(context);
+  // Get account ID from lookup field
+  const accountId =
+    accountLookup && accountLookup.length > 0
+      ? accountLookup[0].id?.replace(/[{}]/g, "")
+      : null;
+
+  const { account, loading, error, refresh } = useAccountData(
+    context,
+    accountId
+  );
 
   return (
     <div className="main-container">
       <div className="header">
-        <h2>Complex PCF Control</h2>
-        {sampleProperty && <p>Property: {sampleProperty}</p>}
+        <h2>Account Details</h2>
+        {sampleProperty && (
+          <p className="subtitle">Property: {sampleProperty}</p>
+        )}
       </div>
 
       <div className="content">
-        {loading && <div>Loading data...</div>}
-        {error && <div className="error">Error: {error}</div>}
-        {data && (
-          <div className="data-display">
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
-        )}
-        <button onClick={refresh} className="refresh-button">
-          Refresh Data
-        </button>
+        <AccountDisplay
+          account={account}
+          loading={loading}
+          error={error}
+          onRefresh={refresh}
+        />
       </div>
     </div>
   );

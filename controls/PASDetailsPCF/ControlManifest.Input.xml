@@ -3,7 +3,8 @@
   <control namespace="PASDetailsPCF" constructor="PASDetailsPCF" version="1.0.0" display-name-key="PASDetailsPCF_Display_Key" description-key="PASDetailsPCF_Desc_Key" control-type="standard">
     
     <!-- Property definitions -->
-    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
+    <property name="accountLookup" display-name-key="Account_Lookup_Display_Key" description-key="Account_Lookup_Desc_Key" of-type="Lookup.Simple" usage="bound" required="false" />
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
     
     <!-- Resources -->
     <resources>

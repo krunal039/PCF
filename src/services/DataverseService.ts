@@ -44,7 +44,50 @@ export class DataverseService {
         "@odata.count": response["@odata.count"],
         "@odata.nextLink": response["@odata.nextLink"],
       };
-    } catch (error) {
+    } catch (error: any) {
+      // Check if this is the "retrieveMultipleRecords not supported" error
+      // This can happen in test harness or certain PCF contexts
+      const errorMessage = error?.message || String(error);
+      if (
+        errorMessage.includes("retrieve multiple records") ||
+        errorMessage.includes("not yet supported")
+      ) {
+        // Try fallback: get current record if available
+        const recordId = this.getCurrentRecordId();
+        const entityTypeName = this.getEntityTypeName();
+
+        if (recordId && entityTypeName) {
+          this.logger.info(
+            `Fallback: Fetching single record ${recordId} from ${entityTypeName}`
+          );
+          try {
+            const record = await this.fetchRecord(
+              entityTypeName,
+              recordId,
+              options?.select
+            );
+            return {
+              value: [record],
+              "@odata.count": 1,
+            };
+          } catch (fallbackError) {
+            this.logger.error(
+              "Fallback fetchRecord also failed",
+              fallbackError
+            );
+          }
+        }
+
+        // If fallback didn't work, throw a more helpful error
+        throw new Error(
+          "retrieveMultipleRecords is not supported in this context. " +
+            "This may be a test harness limitation. " +
+            (recordId
+              ? `Current record ID: ${recordId}`
+              : "No current record ID available.")
+        );
+      }
+
       const errorInfo = ErrorHandler.parse(error, {
         service: "DataverseService",
         operation: "fetchRecords",
@@ -52,6 +95,40 @@ export class DataverseService {
       });
       this.logger.error("Error fetching records", error, errorInfo.context);
       throw error;
+    }
+  }
+
+  /**
+   * Get current record ID from context (if available)
+   */
+  private getCurrentRecordId(): string | null {
+    try {
+      // In model-driven apps, get record ID from page context
+      const pageContext = (this.context as any).page;
+      if (pageContext?.entityId) {
+        return pageContext.entityId;
+      }
+
+      // Alternative: check if there's a record ID in the context
+      const recordId = (this.context as any).page?.entityId;
+      return recordId || null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Get entity type name from context (if available)
+   */
+  private getEntityTypeName(): string | null {
+    try {
+      const pageContext = (this.context as any).page;
+      if (pageContext?.entityTypeName) {
+        return pageContext.entityTypeName;
+      }
+      return null;
+    } catch {
+      return null;
     }
   }
 
@@ -65,7 +142,8 @@ export class DataverseService {
   async fetchRecord(
     entityName: string,
     recordId: string,
-    select?: string[]
+    select?: string[],
+    _options?: QueryOptions
   ): Promise<DataverseRecord> {
     try {
       this.logger.info(
@@ -142,11 +220,7 @@ export class DataverseService {
     try {
       this.logger.info(`Updating record ${recordId} in entity: ${entityName}`);
 
-      await this.webApiService.updateRecord(
-        entityName,
-        recordId,
-        data
-      );
+      await this.webApiService.updateRecord(entityName, recordId, data);
 
       this.logger.info(`Record ${recordId} updated successfully`);
     } catch (error) {

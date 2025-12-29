@@ -7,12 +7,14 @@ import "../styles/App.css";
 
 export interface AppProps {
   context: ComponentFramework.Context<any>;
+  accountLookup?: ComponentFramework.LookupValue[];
   sampleProperty?: string;
   onUpdate?: () => void;
 }
 
 export const App: React.FC<AppProps> = ({
   context,
+  accountLookup,
   sampleProperty,
   onUpdate,
 }) => {
@@ -51,6 +53,7 @@ export const App: React.FC<AppProps> = ({
       <div className="app-container">
         <MainContainer
           context={context}
+          accountLookup={accountLookup}
           sampleProperty={sampleProperty}
           onUpdate={onUpdate}
         />

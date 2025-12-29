@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <control namespace="PartialEntryPCF" constructor="PartialEntryPCF" version="1.0.0" display-name-key="PartialEntryPCF_Display_Key" description-key="PartialEntryPCF_Desc_Key" control-type="standard">
+    
+    <!-- Property definitions - Bound to Dataverse entity fields -->
+    <property name="underwritingType" display-name-key="Underwriting_Type_Display_Key" description-key="Underwriting_Type_Desc_Key" of-type="OptionSet" usage="bound" required="false" />
+    <property name="brokerName" display-name-key="Broker_Name_Display_Key" description-key="Broker_Name_Desc_Key" of-type="Lookup.Simple" usage="bound" required="false" />
+    <property name="inceptionDate" display-name-key="Inception_Date_Display_Key" description-key="Inception_Date_Desc_Key" of-type="DateAndTime.DateOnly" usage="bound" required="false" />
+    <property name="methodOfPlacement" display-name-key="Method_Of_Placement_Display_Key" description-key="Method_Of_Placement_Desc_Key" of-type="OptionSet" usage="bound" required="false" />
+    <property name="brokerCode" display-name-key="Broker_Code_Display_Key" description-key="Broker_Code_Desc_Key" of-type="SingleLine.Text" usage="bound" required="false" />
+    
+    <!-- Resources -->
+    <resources>
+      <code path="index.ts" order="1"/>
+      <css path="css/PartialEntryPCF.css" order="1"/>
+      <resx path="strings/PartialEntryPCF.1033.resx" version="1.0.0" />
+    </resources>
+    
+    <!-- Feature usage -->
+    <feature-usage>
+      <uses-feature name="WebAPI" required="true" />
+      <uses-feature name="Utility" required="true" />
+    </feature-usage>
+  </control>
+</manifest>
+

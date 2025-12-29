@@ -58,24 +58,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PASDetailsPCF_Display_Key" xml:space="preserve">
-    <value>PAS Details PCF Control</value>
+  <data name="PartialEntryPCF_Display_Key" xml:space="preserve">
+    <value>Partial Entry Form</value>
   </data>
-  <data name="PASDetailsPCF_Desc_Key" xml:space="preserve">
-    <value>PAS Details PCF Control with frontend and service layer</value>
+  <data name="PartialEntryPCF_Desc_Key" xml:space="preserve">
+    <value>Partial entry form with Dataverse entity binding</value>
   </data>
-  <data name="Account_Lookup_Display_Key" xml:space="preserve">
-    <value>Account</value>
+  <data name="Underwriting_Type_Display_Key" xml:space="preserve">
+    <value>Underwriting Type</value>
   </data>
-  <data name="Account_Lookup_Desc_Key" xml:space="preserve">
-    <value>Select an account to display its details</value>
+  <data name="Underwriting_Type_Desc_Key" xml:space="preserve">
+    <value>Select the underwriting type</value>
   </data>
-  <data name="Property_Display_Key" xml:space="preserve">
-    <value>Sample Property</value>
+  <data name="Broker_Name_Display_Key" xml:space="preserve">
+    <value>Broker Name</value>
   </data>
-  <data name="Property_Desc_Key" xml:space="preserve">
-    <value>Sample property description</value>
+  <data name="Broker_Name_Desc_Key" xml:space="preserve">
+    <value>Select the broker name</value>
+  </data>
+  <data name="Inception_Date_Display_Key" xml:space="preserve">
+    <value>Inception Date</value>
+  </data>
+  <data name="Inception_Date_Desc_Key" xml:space="preserve">
+    <value>Select the inception date</value>
+  </data>
+  <data name="Method_Of_Placement_Display_Key" xml:space="preserve">
+    <value>Method of placement</value>
+  </data>
+  <data name="Method_Of_Placement_Desc_Key" xml:space="preserve">
+    <value>Select the method of placement</value>
+  </data>
+  <data name="Broker_Code_Display_Key" xml:space="preserve">
+    <value>Broker code</value>
+  </data>
+  <data name="Broker_Code_Desc_Key" xml:space="preserve">
+    <value>Enter or select the broker code</value>
   </data>
 </root>
-
 
