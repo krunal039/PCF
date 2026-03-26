@@ -27,6 +27,19 @@ export class PartialEntryPCF
     this._container = container;
     this._context = context;
     this._notifyOutputChanged = notifyOutputChanged;
+
+    // Single scrollport inside the control when the host allocates a bounded height (model-driven apps).
+    this._container.style.boxSizing = "border-box";
+    this._container.style.display = "flex";
+    this._container.style.flexDirection = "column";
+    this._container.style.minHeight = "0";
+    this._container.style.width = "100%";
+
+    try {
+      context.mode.trackContainerResize(true);
+    } catch {
+      /* host may not support in some harness versions */
+    }
   }
 
   public updateView(context: ComponentFramework.Context<IInputs>): void {
@@ -146,6 +159,15 @@ export class PartialEntryPCF
       },
     };
 
+    const allocatedH = context.mode.allocatedHeight;
+    if (allocatedH >= 0) {
+      this._container.style.height = `${allocatedH}px`;
+      this._container.style.overflow = "hidden";
+    } else {
+      this._container.style.height = "";
+      this._container.style.overflow = "";
+    }
+
     // Render React component using React 18 createRoot
     if (!this._root) {
       this._root = createRoot(this._container);
@@ -161,6 +183,11 @@ export class PartialEntryPCF
     if (this._root) {
       this._root.unmount();
       this._root = null;
+    }
+    try {
+      this._context.mode.trackContainerResize(false);
+    } catch {
+      /* ignore */
     }
   }
 }
